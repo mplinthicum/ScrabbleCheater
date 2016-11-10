@@ -11,12 +11,11 @@
 
     <GridView
         android:layout_width="1024dp"
-        android:layout_height="1024dp"
+        android:layout_height="360dp"
         android:id="@+id/board"
         android:numColumns="15"
-        android:columnWidth="68dp"
-        android:scrollbarAlwaysDrawHorizontalTrack="true"
-        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:verticalSpacing="0dp"
+        android:horizontalSpacing="0dp"
         android:background="@drawable/board" />
 
 </RelativeLayout>
