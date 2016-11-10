@@ -9,4 +9,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ScrabbleBoardActivity">
 
+    <GridView
+        android:layout_width="1024dp"
+        android:layout_height="1024dp"
+        android:id="@+id/board"
+        android:numColumns="15"
+        android:columnWidth="68dp"
+        android:scrollbarAlwaysDrawHorizontalTrack="true"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:background="@drawable/board" />
+
 </RelativeLayout>
