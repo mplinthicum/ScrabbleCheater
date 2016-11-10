@@ -16,7 +16,6 @@ public class PreferencesActivity extends PreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_preferences);
         getFragmentManager().beginTransaction().replace(android.R.id.content, new ScrabblePreferencesFragment()).commit();
     }
 
