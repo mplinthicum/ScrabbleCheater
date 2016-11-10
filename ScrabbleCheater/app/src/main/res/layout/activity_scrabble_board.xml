@@ -10,7 +10,7 @@
     tools:context=".ScrabbleBoardActivity">
 
     <GridView
-        android:layout_width="1024dp"
+        android:layout_width="360dp"
         android:layout_height="360dp"
         android:id="@+id/board"
         android:numColumns="15"
