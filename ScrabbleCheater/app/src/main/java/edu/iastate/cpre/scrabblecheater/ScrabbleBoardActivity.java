@@ -1,8 +1,11 @@
 package edu.iastate.cpre.scrabblecheater;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
 import android.widget.AdapterView;
 import android.view.Menu;
@@ -21,6 +24,8 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
 
         board = (GridView) findViewById(R.id.board);
         board.setAdapter(new ImageAdapter(this));
+
+        board.getLayoutParams().height = (int) getScreenWidth();
 
         board.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -48,5 +53,13 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private float getScreenWidth() {
+        Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+
+        return outMetrics.widthPixels;
     }
 }
