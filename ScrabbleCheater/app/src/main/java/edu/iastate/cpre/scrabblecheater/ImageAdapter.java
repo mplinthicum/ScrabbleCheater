@@ -36,13 +36,15 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent){
+        GridView board = (GridView) parent;
         ImageView imageView;
 
         if (convertView == null) {
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(48, 48));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(1, 1, 1, 1);
+            imageView.setLayoutParams(new GridView.LayoutParams(board.getLayoutParams().width, board.getLayoutParams().height / 15));
+            imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            imageView.setPadding(6, 0, 0, 0);
+            imageView.setAlpha(0.0f);
 
         } else {
             imageView = (ImageView) convertView;
