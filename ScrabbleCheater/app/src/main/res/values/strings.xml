@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ScrabbleCheater</string>
-    <string name="scrapref">Iamthing</string>
+    <string name="boardpref">board</string>
+    <string name="dictionarypref">dictionary</string>
 </resources>

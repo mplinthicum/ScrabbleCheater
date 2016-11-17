@@ -1,7 +1,10 @@
 package edu.iastate.cpre.scrabblecheater;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Point;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -23,7 +26,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         setContentView(R.layout.activity_scrabble_board);
 
         board = (GridView) findViewById(R.id.board);
-        board.setAdapter(new ImageAdapter(this));
+        setBoardFromPrefs(board);
 
         board.getLayoutParams().height = (int) getScreenWidth();
 
@@ -55,11 +58,33 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         }
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        setBoardFromPrefs(board);
+    }
+
     private float getScreenWidth() {
         Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
 
         return outMetrics.widthPixels;
+    }
+
+    private void setBoardFromPrefs(GridView boardID){
+        // Get board settings from preferences and set to either Scrabble or WWF board
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Resources res = getResources();
+        boolean isWWFB = prefs.getBoolean(res.getString(R.string.boardpref), false);
+
+        // Set the background to whatever the setting is
+        if(isWWFB)
+            boardID.setBackgroundResource(R.drawable.wwfb);
+        else
+            boardID.setBackgroundResource(R.drawable.board);
+
+        board.setAdapter(new ImageAdapter(this));
     }
 }

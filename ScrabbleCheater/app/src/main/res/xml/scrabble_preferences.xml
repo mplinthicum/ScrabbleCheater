@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <PreferenceCategory android:title="Scrabble Preferences"    >
+        <PreferenceCategory android:title="Board Preferences"    >
             <CheckBoxPreference
                 android:defaultValue="false"
-                android:key="@string/scrapref"
-                android:summary="Do stuff"
-                android:title="Scrab"   />
+                android:key="@string/boardpref"
+                android:title="Use Words With Friends Board"
+                android:summary="If unchecked, the Scrabble board will be used by default"/>
+        </PreferenceCategory>
+
+        <PreferenceCategory android:title="Dictionary Preferences">
+            <ListPreference
+                android:key="@string/dictionarypref"
+                android:title="Dictionary"
+                android:entries="@array/dictionaries"
+                android:entryValues="@array/dictionaryFiles"
+                android:summary="Dictionary to reference for Anagram Solver"/>
         </PreferenceCategory>
 </PreferenceScreen>
