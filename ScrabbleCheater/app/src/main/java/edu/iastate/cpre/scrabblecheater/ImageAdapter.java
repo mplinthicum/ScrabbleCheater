@@ -13,12 +13,11 @@ import android.widget.ImageView;
 public class ImageAdapter extends BaseAdapter {
 
     private Context mContext;
-    private Integer[] mTiles = new Integer[225];
+    Integer[] mTiles = new Integer[225];
 
     public ImageAdapter(Context c) {
         mContext = c;
-
-        for (int i = 0; i < 225; i++) {
+        for(int i = 0; i < 225; i++){
             mTiles[i] = R.drawable.tile;
         }
     }
@@ -50,7 +49,7 @@ public class ImageAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        imageView.setImageResource(mTiles[position]);
+        imageView.setImageResource(mTiles[0]);
         return imageView;
     }
 }
