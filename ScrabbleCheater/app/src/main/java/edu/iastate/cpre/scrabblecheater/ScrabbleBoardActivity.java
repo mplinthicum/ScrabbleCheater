@@ -2,6 +2,7 @@ package edu.iastate.cpre.scrabblecheater;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -11,6 +12,7 @@ import android.widget.AdapterView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class ScrabbleBoardActivity extends ActionBarActivity {
@@ -29,10 +31,19 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
 
         board.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                if(v.getAlpha() > 0.0f) {
+                    v.setAlpha(0.0f);
+                } else {
+                    v.setAlpha(1.0f);
+                }
                 Toast.makeText(ScrabbleBoardActivity.this, "" + position, Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
+    public void onTileClick(int spaceNum) {
+        ImageView space = (ImageView) board.getAdapter().getItem(spaceNum);
+        space.setAlpha(1.0f);
     }
 
     @Override

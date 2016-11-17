@@ -28,7 +28,7 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     public Object getItem(int position) {
-        return null;
+        return mTiles[position];
     }
 
     public long getItemId(int position) {
