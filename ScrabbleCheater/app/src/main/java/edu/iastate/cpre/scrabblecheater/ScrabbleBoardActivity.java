@@ -21,12 +21,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ScrabbleBoardActivity extends ActionBarActivity {
 
     GridView board;
     String word = "";
-    ImageView tile;
 
+    // ArrayList to hold ImageViews for all tiles.
+    List<ImageView> tiles = new ArrayList<>();
+
+    // Array containing all scrabble and placeholder tiles.
     private Integer[] scrabbleTiles = {
             R.drawable.tile,
             R.drawable.tile_a,
@@ -62,50 +68,61 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrabble_board);
 
+        // Build the board.
         board = (GridView) findViewById(R.id.board);
         board.setAdapter(new ImageAdapter(this));
-
         board.getLayoutParams().height = (int) getScreenWidth();
 
         board.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                onTileClick(v);
                 Toast.makeText(ScrabbleBoardActivity.this, "" + position, Toast.LENGTH_SHORT).show();
+                alertBoxBuilder(position);
             }
         });
     }
 
-    public void onTileClick(View tile) {
-        alertBoxBuilder();
-        this.tile = (ImageView) tile;
-    }
+    /**
+     * Builds and shows an alert to allow the user to input a word onto the scrabble board and
+     * to decide its orientation (horizontal or vertical).
+     */
+    private void alertBoxBuilder(int position){
+        final int p = position;
 
-    private void alertBoxBuilder(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("Type your word, fool.");
         alertDialog.setMessage("Word goes here, fool");
 
         final EditText input = new EditText(this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        input.setLayoutParams(lp);
+        input.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         alertDialog.setView(input);
 
+        // Horizontal word option.
         alertDialog.setPositiveButton("Horizontal", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 word = input.getText().toString();
                 Toast.makeText(ScrabbleBoardActivity.this, "HORIZONTAL: " + word, Toast.LENGTH_SHORT).show();
-                tile.setImageResource(chooseLetter(word.charAt(0)));
-                tile.setAlpha(1.0f);
+                for(int i = p; i < p + word.length(); i++) {
+                    if(i >= 225) break;
+                    ImageView currentTile = (ImageView) board.getAdapter().getItem(i);
+                    currentTile.setImageResource(chooseLetter(word.charAt(i - p)));
+                }
             }
         });
 
+        // Vertical word option.
         alertDialog.setNegativeButton("Vertical", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 word = input.getText().toString();
                 Toast.makeText(ScrabbleBoardActivity.this, "VERTICAL: " + word, Toast.LENGTH_SHORT).show();
+                for(int i = 0; i < word.length(); i++) {
+                    if(p + i * 15 >= 225) break;
+                    ImageView currentTile = (ImageView) board.getAdapter().getItem(p + i * 15);
+                    currentTile.setImageResource(chooseLetter(word.charAt(i)));
+                }
             }
         });
 
+        // Show the word input alert.
         alertDialog.show();
     }
 

@@ -7,16 +7,21 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by mpl on 11/10/2016.
  */
 public class ImageAdapter extends BaseAdapter {
 
     private Context mContext;
+    private List<ImageView> mList = new ArrayList<>();
     Integer[] mTiles = new Integer[225];
 
-    public ImageAdapter(Context c) {
-        mContext = c;
+    public ImageAdapter(Context mContext) {
+        this.mContext = mContext;
+
         for(int i = 0; i < 225; i++){
             mTiles[i] = R.drawable.tile;
         }
@@ -27,29 +32,31 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     public Object getItem(int position) {
-        return mTiles[position];
+        return mList.get(position);
     }
 
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     public View getView(int position, View convertView, ViewGroup parent){
         GridView board = (GridView) parent;
         ImageView imageView;
 
+        // Set up the ImageView parameters.
         if (convertView == null) {
             imageView = new ImageView(mContext);
             imageView.setLayoutParams(new GridView.LayoutParams(board.getLayoutParams().width, board.getLayoutParams().height / 15));
             imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             imageView.setPadding(6, 0, 0, 0);
-            imageView.setAlpha(0.0f);
 
+            // Add the ImageView to the list.
+            mList.add(position, imageView);
         } else {
             imageView = (ImageView) convertView;
+            mList.remove(position);
+            mList.add(position, imageView);
         }
-
-        imageView.setImageResource(mTiles[0]);
         return imageView;
     }
 }
