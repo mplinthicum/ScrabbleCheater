@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 public class ScrabbleBoardActivity extends ActionBarActivity {
 
@@ -34,8 +33,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
             R.drawable.tile_h, R.drawable.tile_i, R.drawable.tile_j, R.drawable.tile_k, R.drawable.tile_l,
             R.drawable.tile_m, R.drawable.tile_n, R.drawable.tile_o, R.drawable.tile_p, R.drawable.tile_q,
             R.drawable.tile_r, R.drawable.tile_s, R.drawable.tile_t, R.drawable.tile_u, R.drawable.tile_v,
-            R.drawable.tile_w, R.drawable.tile_x, R.drawable.tile_y, R.drawable.tile_z
-    };
+            R.drawable.tile_w, R.drawable.tile_x, R.drawable.tile_y, R.drawable.tile_z};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +48,6 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
 
         board.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Toast.makeText(ScrabbleBoardActivity.this, "" + position, Toast.LENGTH_SHORT).show();
                 alertBoxBuilder(position);
             }
         });
@@ -75,11 +72,13 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         alertDialog.setPositiveButton("Horizontal", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 word = input.getText().toString();
-                Toast.makeText(ScrabbleBoardActivity.this, "HORIZONTAL: " + word, Toast.LENGTH_SHORT).show();
-                for(int i = p; i < p + word.length(); i++) {
-                    if(i >= 225) break;
-                    ImageView currentTile = (ImageView) board.getAdapter().getItem(i);
-                    currentTile.setImageResource(chooseLetter(word.charAt(i - p)));
+                for(int i = 0; i < word.length(); i++) {
+                    // Stop if the word goes past the end of the board.
+                    if((p + i) % 15 == 0 && i > 0) break;
+
+                    // Place the tiles.
+                    ImageView currentTile = (ImageView) board.getAdapter().getItem(p + i);
+                    currentTile.setImageResource(chooseLetter(word.charAt(i)));
                 }
             }
         });
@@ -88,16 +87,16 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         alertDialog.setNegativeButton("Vertical", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 word = input.getText().toString();
-                Toast.makeText(ScrabbleBoardActivity.this, "VERTICAL: " + word, Toast.LENGTH_SHORT).show();
                 for(int i = 0; i < word.length(); i++) {
-                    if(p + i * 15 >= 225) break;
+                    // Stop if the word goes past the end of the board.
+                    if((p + i * 15) > 224) break;
+
+                    // Place the tiles.
                     ImageView currentTile = (ImageView) board.getAdapter().getItem(p + i * 15);
                     currentTile.setImageResource(chooseLetter(word.charAt(i)));
                 }
             }
         });
-
-        // Show the word input alert.
         alertDialog.show();
     }
 
