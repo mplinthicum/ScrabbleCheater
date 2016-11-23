@@ -5,13 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.Point;
-import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutCompat;
-import android.text.Editable;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
@@ -24,9 +20,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ScrabbleBoardActivity extends ActionBarActivity {
 
     // The scrabble board.
@@ -36,34 +29,12 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
     String word = "";
 
     // Array containing all scrabble and placeholder tiles.
-    private Integer[] scrabbleTiles = {
-            R.drawable.tile,
-            R.drawable.tile_a,
-            R.drawable.tile_b,
-            R.drawable.tile_c,
-            R.drawable.tile_d,
-            R.drawable.tile_e,
-            R.drawable.tile_f,
-            R.drawable.tile_g,
-            R.drawable.tile_h,
-            R.drawable.tile_i,
-            R.drawable.tile_j,
-            R.drawable.tile_k,
-            R.drawable.tile_l,
-            R.drawable.tile_m,
-            R.drawable.tile_n,
-            R.drawable.tile_o,
-            R.drawable.tile_p,
-            R.drawable.tile_q,
-            R.drawable.tile_r,
-            R.drawable.tile_s,
-            R.drawable.tile_t,
-            R.drawable.tile_u,
-            R.drawable.tile_v,
-            R.drawable.tile_w,
-            R.drawable.tile_x,
-            R.drawable.tile_y,
-            R.drawable.tile_z
+    private Integer[] scrabbleTiles = {R.drawable.tile, R.drawable.tile_a, R.drawable.tile_b,
+            R.drawable.tile_c, R.drawable.tile_d, R.drawable.tile_e, R.drawable.tile_f, R.drawable.tile_g,
+            R.drawable.tile_h, R.drawable.tile_i, R.drawable.tile_j, R.drawable.tile_k, R.drawable.tile_l,
+            R.drawable.tile_m, R.drawable.tile_n, R.drawable.tile_o, R.drawable.tile_p, R.drawable.tile_q,
+            R.drawable.tile_r, R.drawable.tile_s, R.drawable.tile_t, R.drawable.tile_u, R.drawable.tile_v,
+            R.drawable.tile_w, R.drawable.tile_x, R.drawable.tile_y, R.drawable.tile_z
     };
 
     @Override
