@@ -3,8 +3,11 @@ package edu.iastate.cpre.scrabblecheater;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -70,7 +73,8 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
 
         // Build the board.
         board = (GridView) findViewById(R.id.board);
-        board.setAdapter(new ImageAdapter(this));
+        setBoardFromPrefs(board);
+
         board.getLayoutParams().height = (int) getScreenWidth();
 
         board.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -146,6 +150,13 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         }
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        setBoardFromPrefs(board);
+    }
+
     private float getScreenWidth() {
         Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -154,35 +165,77 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         return outMetrics.widthPixels;
     }
 
-    private Integer chooseLetter(char letter){
-        switch (letter){
-            case 'a': return scrabbleTiles[1];
-            case 'b': return scrabbleTiles[2];
-            case 'c': return scrabbleTiles[3];
-            case 'd': return scrabbleTiles[4];
-            case 'e': return scrabbleTiles[5];
-            case 'f': return scrabbleTiles[6];
-            case 'g': return scrabbleTiles[7];
-            case 'h': return scrabbleTiles[8];
-            case 'i': return scrabbleTiles[9];
-            case 'j': return scrabbleTiles[10];
-            case 'k': return scrabbleTiles[11];
-            case 'l': return scrabbleTiles[12];
-            case 'm': return scrabbleTiles[12];
-            case 'n': return scrabbleTiles[14];
-            case 'o': return scrabbleTiles[15];
-            case 'p': return scrabbleTiles[16];
-            case 'q': return scrabbleTiles[17];
-            case 'r': return scrabbleTiles[18];
-            case 's': return scrabbleTiles[19];
-            case 't': return scrabbleTiles[20];
-            case 'u': return scrabbleTiles[21];
-            case 'v': return scrabbleTiles[22];
-            case 'w': return scrabbleTiles[23];
-            case 'x': return scrabbleTiles[24];
-            case 'y': return scrabbleTiles[25];
-            case 'z': return scrabbleTiles[26];
-            default: return scrabbleTiles[0];
+    private Integer chooseLetter(char letter) {
+        switch (letter) {
+            case 'a':
+                return scrabbleTiles[1];
+            case 'b':
+                return scrabbleTiles[2];
+            case 'c':
+                return scrabbleTiles[3];
+            case 'd':
+                return scrabbleTiles[4];
+            case 'e':
+                return scrabbleTiles[5];
+            case 'f':
+                return scrabbleTiles[6];
+            case 'g':
+                return scrabbleTiles[7];
+            case 'h':
+                return scrabbleTiles[8];
+            case 'i':
+                return scrabbleTiles[9];
+            case 'j':
+                return scrabbleTiles[10];
+            case 'k':
+                return scrabbleTiles[11];
+            case 'l':
+                return scrabbleTiles[12];
+            case 'm':
+                return scrabbleTiles[12];
+            case 'n':
+                return scrabbleTiles[14];
+            case 'o':
+                return scrabbleTiles[15];
+            case 'p':
+                return scrabbleTiles[16];
+            case 'q':
+                return scrabbleTiles[17];
+            case 'r':
+                return scrabbleTiles[18];
+            case 's':
+                return scrabbleTiles[19];
+            case 't':
+                return scrabbleTiles[20];
+            case 'u':
+                return scrabbleTiles[21];
+            case 'v':
+                return scrabbleTiles[22];
+            case 'w':
+                return scrabbleTiles[23];
+            case 'x':
+                return scrabbleTiles[24];
+            case 'y':
+                return scrabbleTiles[25];
+            case 'z':
+                return scrabbleTiles[26];
+            default:
+                return scrabbleTiles[0];
         }
+    }
+
+    private void setBoardFromPrefs(GridView boardID){
+        // Get board settings from preferences and set to either Scrabble or WWF board
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Resources res = getResources();
+        boolean isWWFB = prefs.getBoolean(res.getString(R.string.boardpref), false);
+
+        // Set the background to whatever the setting is
+        if(isWWFB)
+            boardID.setBackgroundResource(R.drawable.wwfb);
+        else
+            boardID.setBackgroundResource(R.drawable.board);
+
+        board.setAdapter(new ImageAdapter(this));
     }
 }

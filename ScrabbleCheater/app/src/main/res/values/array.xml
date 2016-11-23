@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="dictionaries">
+        <item>USA English Dictionary (61k words)</item>
+        <item>194k Word Dictionary</item>
+        <item>479k Word Dictionary</item>
+        <item>Public Brand Software Dictionary</item>
+        <item>Official Scrabble Dictionary</item>
+    </string-array>
+
+    <string-array name="dictionaryFiles">
+        <item>usaEnglish61k.txt</item>
+        <item>194kDictionary.txt</item>
+        <item>479kDictionary.txt</item>
+        <item>pbsDictionary.txt</item>
+        <item>scrabbleDictionary.txt</item>
+    </string-array>
+</resources>
