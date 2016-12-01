@@ -14,10 +14,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class ScrabbleBoardActivity extends ActionBarActivity {
 
@@ -35,6 +37,10 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
             R.drawable.tile_r, R.drawable.tile_s, R.drawable.tile_t, R.drawable.tile_u, R.drawable.tile_v,
             R.drawable.tile_w, R.drawable.tile_x, R.drawable.tile_y, R.drawable.tile_z};
 
+    // Array containing all user tile IDs for easy looping.
+    private Integer[] userTiles = {R.id.my_tile_1, R.id.my_tile_2, R.id.my_tile_3, R.id.my_tile_4,
+            R.id.my_tile_5, R.id.my_tile_6, R.id.my_tile_7};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,12 +49,18 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         // Build the board.
         board = (GridView) findViewById(R.id.board);
         setBoardFromPrefs(board);
-
         board.getLayoutParams().height = (int) getScreenWidth();
-
         board.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                alertBoxBuilder(position);
+                boardAlertBoxBuilder(position);
+            }
+        });
+
+        // Set up the user tiles input.
+        Button enterTiles = (Button) findViewById(R.id.enter_tiles_button);
+        enterTiles.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                tilesAlertBoxBuilder();
             }
         });
     }
@@ -57,7 +69,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
      * Builds and shows an alert to allow the user to input a word onto the scrabble board and
      * to decide its orientation (horizontal or vertical).
      */
-    private void alertBoxBuilder(int position){
+    private void boardAlertBoxBuilder(int position){
         final int p = position;
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -100,6 +112,42 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         alertDialog.show();
     }
 
+    /**
+     * Builds and shows an alert box that, when the solve button is clicked, allows a user to enter
+     * the tiles they have in their hand.
+     */
+    private void tilesAlertBoxBuilder() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Type your tiles, fool.");
+        alertDialog.setMessage("Tiles go here, fool.");
+
+        final EditText input = new EditText(this);
+        input.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        alertDialog.setView(input);
+
+        // Enter the word option.
+        alertDialog.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogInterface, int whichButton) {
+                String tiles = input.getText().toString();
+                Toast.makeText(ScrabbleBoardActivity.this, input.getText().toString(), Toast.LENGTH_SHORT).show();
+                
+                for(int i = 0; i < tiles.length(); i++) {
+                    ImageView tile = (ImageView) findViewById(userTiles[i]);
+                    tile.setImageResource(chooseLetter(tiles.charAt(i)));
+                }
+            }
+        });
+
+        // Cancel your tile entry.
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int whichButton) {
+                Toast.makeText(ScrabbleBoardActivity.this, "Flaky Hoe.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        alertDialog.show();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -123,8 +171,11 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
     @Override
     public void onResume(){
         super.onResume();
-
         setBoardFromPrefs(board);
+    }
+
+    public void onSolveClick(View v) {
+
     }
 
     private float getScreenWidth() {

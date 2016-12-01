@@ -2,4 +2,6 @@
     <string name="app_name">ScrabbleCheater</string>
     <string name="boardpref">board</string>
     <string name="dictionarypref">dictionary</string>
+    <string name="solve_button">Solve</string>
+    <string name="enter_tiles_button">Enter Tiles</string>
 </resources>

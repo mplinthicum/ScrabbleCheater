@@ -11,11 +11,70 @@
 
     <GridView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="360dp"
         android:id="@+id/board"
         android:numColumns="15"
         android:verticalSpacing="0dp"
         android:horizontalSpacing="0dp"
         android:background="@drawable/board" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/player_tiles"
+        android:layout_below="@id/board">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/enter_tiles_button"
+            android:id="@+id/enter_tiles_button"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/my_tile_1"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/my_tile_2" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/my_tile_3" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/my_tile_4" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/my_tile_5" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/my_tile_6" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/my_tile_7" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/solve_button"
+        android:onClick="onSolveClick"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_below="@id/player_tiles"
+        android:text="@string/solve_button"/>
 
 </RelativeLayout>
