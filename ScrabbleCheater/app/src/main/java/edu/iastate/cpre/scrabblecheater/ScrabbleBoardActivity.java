@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
@@ -30,7 +31,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
     String word = "";
 
     // Array containing all scrabble and placeholder tiles.
-    private Integer[] scrabbleTiles = {R.drawable.tile, R.drawable.tile_a, R.drawable.tile_b,
+    private Integer[] scrabbleDrawableTiles = {R.drawable.tile, R.drawable.tile_a, R.drawable.tile_b,
             R.drawable.tile_c, R.drawable.tile_d, R.drawable.tile_e, R.drawable.tile_f, R.drawable.tile_g,
             R.drawable.tile_h, R.drawable.tile_i, R.drawable.tile_j, R.drawable.tile_k, R.drawable.tile_l,
             R.drawable.tile_m, R.drawable.tile_n, R.drawable.tile_o, R.drawable.tile_p, R.drawable.tile_q,
@@ -38,8 +39,14 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
             R.drawable.tile_w, R.drawable.tile_x, R.drawable.tile_y, R.drawable.tile_z};
 
     // Array containing all user tile IDs for easy looping.
-    private Integer[] userTiles = {R.id.my_tile_1, R.id.my_tile_2, R.id.my_tile_3, R.id.my_tile_4,
+    private Integer[] userImageViewTiles = {R.id.my_tile_1, R.id.my_tile_2, R.id.my_tile_3, R.id.my_tile_4,
             R.id.my_tile_5, R.id.my_tile_6, R.id.my_tile_7};
+
+    // 2D array that holds the char representation of the board state.
+    private char[][] boardStateArray = new char[15][15];
+
+    // Array containing tile currently owned by the user.
+    private char[] userTilesArray = new char[7];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +85,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
 
         final EditText input = new EditText(this);
         input.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
         alertDialog.setView(input);
 
         // Horizontal word option.
@@ -123,6 +131,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
 
         final EditText input = new EditText(this);
         input.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(7)});
         alertDialog.setView(input);
 
         // Enter the word option.
@@ -132,7 +141,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
                 Toast.makeText(ScrabbleBoardActivity.this, input.getText().toString(), Toast.LENGTH_SHORT).show();
                 
                 for(int i = 0; i < tiles.length(); i++) {
-                    ImageView tile = (ImageView) findViewById(userTiles[i]);
+                    ImageView tile = (ImageView) findViewById(userImageViewTiles[i]);
                     tile.setImageResource(chooseLetter(tiles.charAt(i)));
                 }
             }
@@ -187,7 +196,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
     }
 
     private Integer chooseLetter(char letter) {
-        return scrabbleTiles[(int) letter - 96];
+        return scrabbleDrawableTiles[(int) letter - 96];
     }
 
     private void setBoardFromPrefs(GridView boardID){

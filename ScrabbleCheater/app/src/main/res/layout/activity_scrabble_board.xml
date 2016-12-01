@@ -23,7 +23,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/player_tiles"
-        android:layout_below="@id/board">
+        android:layout_below="@id/board"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
 
         <Button
             android:layout_width="wrap_content"
