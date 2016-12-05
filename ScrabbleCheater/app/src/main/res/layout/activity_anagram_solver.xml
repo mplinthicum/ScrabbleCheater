@@ -12,14 +12,16 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:hint="Enter word bank here"
         android:id="@+id/word_entry"/>
     <Button
         android:layout_width="wrap_content"
         android:onClick="onMatchClick"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/playable_words"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/word_entry"
-        android:layout_toEndOf="@+id/word_entry" />
+        android:layout_centerHorizontal="true"
+        android:text="Solve"/>
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

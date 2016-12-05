@@ -50,6 +50,8 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
     // Array containing tile currently owned by the user.
     private char[] userTilesArray = new char[7];
 
+    private String tiles = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,7 +156,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         // Enter the word option.
         alertDialog.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogInterface, int whichButton) {
-                String tiles = input.getText().toString();
+                tiles = input.getText().toString();
                 Toast.makeText(ScrabbleBoardActivity.this, input.getText().toString(), Toast.LENGTH_SHORT).show();
                 
                 for(int i = 0; i < tiles.length(); i++) {
@@ -201,7 +203,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
     }
 
     public void onSolveClick(View v) {
-        startActivity(new Intent(this, AnagramSolverActivity.class));
+        startActivity(new Intent(this, AnagramSolverActivity.class).putExtra("tiles", tiles));
     }
 
     private float getScreenWidth() {
