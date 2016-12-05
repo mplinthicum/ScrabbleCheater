@@ -56,7 +56,7 @@ public class AnagramSolverActivity extends ActionBarActivity {
                 // Go through each line in the dictionary file
                 while ((line = bufferedReader.readLine()) != null){
                     if(isAnagram(bank, line) && line.length() > 1){
-                        matches.add(line);
+                        matches.add(line.toLowerCase());
                     }
                 }
 
@@ -74,6 +74,8 @@ public class AnagramSolverActivity extends ActionBarActivity {
 
     // Helper method to check if string s contains a letter from the word bank
     private static boolean isAnagram(String bank, String s){
+        bank = bank.toLowerCase();
+        s = s.toLowerCase();
 
         // Convert bank into char array for easy char removal
         char[] charBank = bank.toCharArray();
