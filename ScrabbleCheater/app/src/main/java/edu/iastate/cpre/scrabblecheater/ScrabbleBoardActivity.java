@@ -9,6 +9,8 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.text.InputType;
+import android.text.Spanned;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
@@ -130,8 +132,23 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         alertDialog.setMessage("Tiles go here, fool.");
 
         final EditText input = new EditText(this);
+
+        input.setFilters(new InputFilter[] {new InputFilter.LengthFilter(7),
+                new InputFilter() {
+                    public CharSequence filter(CharSequence src, int start,
+                                               int end, Spanned dst, int dstart, int dend) {
+                        if(src.equals("")){ // for backspace
+                            return src;
+                        }
+                        if(src.toString().matches("[a-zA-Z0-9]+")){
+                            return src;
+                        }
+                        return "";
+                    }
+                }
+        });
+
         input.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(7)});
         alertDialog.setView(input);
 
         // Enter the word option.
