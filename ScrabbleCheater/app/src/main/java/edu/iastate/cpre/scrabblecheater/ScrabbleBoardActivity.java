@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -20,9 +20,8 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-public class ScrabbleBoardActivity extends ActionBarActivity {
+public class ScrabbleBoardActivity extends AppCompatActivity {
 
     // The scrabble board.
     GridView board;
@@ -43,11 +42,15 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
             R.id.my_tile_5, R.id.my_tile_6, R.id.my_tile_7};
 
     // 2D array that holds the char representation of the board state.
-    private char[][] boardStateArray = new char[15][15];
+    private char[] boardStateArray = new char[225];
 
     // Array containing tile currently owned by the user.
     private char[] userTilesArray = new char[7];
 
+    /**
+     * You know what this does, stupid.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +73,26 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
                 tilesAlertBoxBuilder();
             }
         });
+
+        // Set all values of board state and tray tiles to '\0'.
+        for(int i = 0; i < 7; i ++){
+            userTilesArray[i] = '\0';
+        }
+
+        for(int i = 0; i < 225; i++) {
+            boardStateArray[i] = '\0';
+        }
+    }
+
+    /**
+     * Starts AnagramSolverActivity and sends the board state and user tiles data.
+     * @param v
+     */
+    public void onSolve(View v) {
+        Intent intent = new Intent(this, AnagramSolverActivity.class);
+        //intent.putExtra("boardstate", boardStateArray);
+        //intent.putExtra("usertiles", userTilesArray);
+        startActivity(intent);
     }
 
     /**
@@ -99,6 +122,9 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
                     // Place the tiles.
                     ImageView currentTile = (ImageView) board.getAdapter().getItem(p + i);
                     currentTile.setImageResource(chooseLetter(word.charAt(i)));
+
+                    // Set the tile in the array.
+                    boardStateArray[p + i] = word.charAt(i);
                 }
             }
         });
@@ -114,6 +140,9 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
                     // Place the tiles.
                     ImageView currentTile = (ImageView) board.getAdapter().getItem(p + i * 15);
                     currentTile.setImageResource(chooseLetter(word.charAt(i)));
+
+                    // Set the tile in the array.
+                    boardStateArray[p + i * 15] = word.charAt(i);
                 }
             }
         });
@@ -138,21 +167,25 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         alertDialog.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogInterface, int whichButton) {
                 String tiles = input.getText().toString();
-                Toast.makeText(ScrabbleBoardActivity.this, input.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                for(int i = 0; i < 7; i++) {
+                    ImageView tile = (ImageView) findViewById(userImageViewTiles[i]);
+                    tile.setImageResource(R.drawable.hollow);
+                    userTilesArray[i] = '\0';
+                }
                 
                 for(int i = 0; i < tiles.length(); i++) {
                     ImageView tile = (ImageView) findViewById(userImageViewTiles[i]);
                     tile.setImageResource(chooseLetter(tiles.charAt(i)));
+                    userTilesArray[i] = tiles.charAt(i);
                 }
             }
         });
 
-        // Cancel your tile entry.
+        // Cancel the tile entry.
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int whichButton) {
-                Toast.makeText(ScrabbleBoardActivity.this, "Flaky Hoe.", Toast.LENGTH_SHORT).show();
-            }
+            public void onClick(DialogInterface dialogInterface, int whichButton) {}
         });
         alertDialog.show();
     }
@@ -183,10 +216,10 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         setBoardFromPrefs(board);
     }
 
-    public void onSolveClick(View v) {
-
-    }
-
+    /**
+     * Private method used to get the width of the screen.  Used in board formatting.
+     * @return
+     */
     private float getScreenWidth() {
         Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -195,6 +228,11 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         return outMetrics.widthPixels;
     }
 
+    /**
+     * Private method used to choose the correct scrabble drawable tile corresponding to the letter.
+     * @param letter
+     * @return Scrabble Drawable
+     */
     private Integer chooseLetter(char letter) {
         return scrabbleDrawableTiles[(int) letter - 96];
     }

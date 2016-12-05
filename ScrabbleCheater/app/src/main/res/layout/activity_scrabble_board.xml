@@ -73,10 +73,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/solve_button"
-        android:onClick="onSolveClick"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:layout_below="@id/player_tiles"
-        android:text="@string/solve_button"/>
+        android:text="@string/solve_button"
+        android:onClick="onSolve"/>
 
 </RelativeLayout>
