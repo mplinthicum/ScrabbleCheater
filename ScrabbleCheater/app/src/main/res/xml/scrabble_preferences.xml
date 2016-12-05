@@ -15,6 +15,7 @@
                 android:title="Dictionary"
                 android:entries="@array/dictionaries"
                 android:entryValues="@array/dictionaryFiles"
-                android:summary="Dictionary to reference for Anagram Solver"/>
+                android:summary="Dictionary to reference for Anagram Solver"
+                android:defaultValue="usaEnglish61k.txt"/>
         </PreferenceCategory>
 </PreferenceScreen>

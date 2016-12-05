@@ -1,9 +1,27 @@
 package edu.iastate.cpre.scrabblecheater;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.AssetManager;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class AnagramSolverActivity extends ActionBarActivity {
 
@@ -11,6 +29,40 @@ public class AnagramSolverActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anagram_solver);
+    }
+
+    public void onMatchClick(View v) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String filename = sharedPreferences.getString(getString(R.string.dictionarypref), "no selection");
+        ArrayList<String> matches = new ArrayList<>();
+        EditText editText = (EditText) findViewById(R.id.word_entry);
+        String bank = editText.getText().toString();
+        ListView listView = (ListView) findViewById(R.id.playable_words);
+
+        // Make sure dictionary preference is set to a dictionary
+        if (!filename.equals("no selection")){
+            try {
+                String line = null;
+                AssetManager assetManager = getAssets();
+                InputStream inputStream = assetManager.open(filename);
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                // Go through each line in the dictionary file
+                while ((line = bufferedReader.readLine()) != null){
+                    if(isAnagram(bank, line) && line.length() > 1){
+                        matches.add(line);
+                    }
+                }
+
+                ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, matches);
+                listView.setAdapter(stringArrayAdapter);
+                listView.invalidateViews();
+            }
+            catch (IOException e){
+
+            }
+        }
     }
 
     // Helper method to check if string s contains a letter from the word bank

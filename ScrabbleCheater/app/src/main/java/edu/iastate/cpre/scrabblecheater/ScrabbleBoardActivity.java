@@ -184,7 +184,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
     }
 
     public void onSolveClick(View v) {
-
+        startActivity(new Intent(this, AnagramSolverActivity.class));
     }
 
     private float getScreenWidth() {
