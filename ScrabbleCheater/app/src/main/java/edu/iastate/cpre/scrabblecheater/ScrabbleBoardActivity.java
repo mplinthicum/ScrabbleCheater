@@ -60,6 +60,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         // Build the board.
         board = (GridView) findViewById(R.id.board);
         setBoardFromPrefs(board);
+        board.setAdapter(new ImageAdapter(this));
         board.getLayoutParams().height = (int) getScreenWidth();
         board.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -89,7 +90,22 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
 
         final EditText input = new EditText(this);
         input.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(15)});
+
+        input.setFilters(new InputFilter[] {new InputFilter.LengthFilter(15),
+                new InputFilter() {
+                    public CharSequence filter(CharSequence src, int start,
+                                               int end, Spanned dst, int dstart, int dend) {
+                        if(src.equals("")){ // for backspace
+                            return src;
+                        }
+                        if(src.toString().matches("[a-zA-Z0-9]+")){
+                            return src;
+                        }
+                        return "";
+                    }
+                }
+        });
+
         alertDialog.setView(input);
 
         // Horizontal word option.
@@ -142,7 +158,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
                         if(src.equals("")){ // for backspace
                             return src;
                         }
-                        if(src.toString().matches("[a-zA-Z0-9]+")){
+                        if(src.toString().matches("[a-zA-Z0-9\\*]+")){
                             return src;
                         }
                         return "";
@@ -229,7 +245,5 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
             boardID.setBackgroundResource(R.drawable.wwfb);
         else
             boardID.setBackgroundResource(R.drawable.board);
-
-        board.setAdapter(new ImageAdapter(this));
     }
 }
