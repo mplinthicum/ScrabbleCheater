@@ -38,7 +38,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
             R.drawable.tile_h, R.drawable.tile_i, R.drawable.tile_j, R.drawable.tile_k, R.drawable.tile_l,
             R.drawable.tile_m, R.drawable.tile_n, R.drawable.tile_o, R.drawable.tile_p, R.drawable.tile_q,
             R.drawable.tile_r, R.drawable.tile_s, R.drawable.tile_t, R.drawable.tile_u, R.drawable.tile_v,
-            R.drawable.tile_w, R.drawable.tile_x, R.drawable.tile_y, R.drawable.tile_z};
+            R.drawable.tile_w, R.drawable.tile_x, R.drawable.tile_y, R.drawable.tile_z, R.drawable.tile_blank};
 
     // Array containing all user tile IDs for easy looping.
     private Integer[] userImageViewTiles = {R.id.my_tile_1, R.id.my_tile_2, R.id.my_tile_3, R.id.my_tile_4,
@@ -101,7 +101,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
                     if((p + i) % 15 == 0 && i > 0) break;
 
                     // Place the tiles.
-                    ImageView currentTile = (ImageView) board.getAdapter().getItem(p + i);
+                    ImageView currentTile = (ImageView) board.getAdapter().getItem(p + i + 1);
                     currentTile.setImageResource(chooseLetter(word.charAt(i)));
                 }
             }
@@ -116,7 +116,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
                     if((p + i * 15) > 224) break;
 
                     // Place the tiles.
-                    ImageView currentTile = (ImageView) board.getAdapter().getItem(p + i * 15);
+                    ImageView currentTile = (ImageView) board.getAdapter().getItem(p + i * 15 + 1);
                     currentTile.setImageResource(chooseLetter(word.charAt(i)));
                 }
             }
@@ -215,7 +215,10 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
     }
 
     private Integer chooseLetter(char letter) {
-        return scrabbleDrawableTiles[(int) letter - 96];
+        if(letter == '*')
+            return scrabbleDrawableTiles[27];
+        else
+            return scrabbleDrawableTiles[(int) letter - 96];
     }
 
     private void setBoardFromPrefs(GridView boardID){
