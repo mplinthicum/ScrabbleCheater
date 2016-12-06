@@ -101,7 +101,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
                     if((p + i) % 15 == 0 && i > 0) break;
 
                     // Place the tiles.
-                    ImageView currentTile = (ImageView) board.getAdapter().getItem(p + i);
+                    ImageView currentTile = (ImageView) board.getAdapter().getItem(p + i + 1);
                     currentTile.setImageResource(chooseLetter(word.charAt(i)));
                 }
             }
@@ -116,7 +116,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
                     if((p + i * 15) > 224) break;
 
                     // Place the tiles.
-                    ImageView currentTile = (ImageView) board.getAdapter().getItem(p + i * 15);
+                    ImageView currentTile = (ImageView) board.getAdapter().getItem(p + i * 15 + 1);
                     currentTile.setImageResource(chooseLetter(word.charAt(i)));
                 }
             }
