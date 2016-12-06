@@ -59,6 +59,11 @@ public class AnagramSolverActivity extends ActionBarActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     public void onMatchClick(View v) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String filename = sharedPreferences.getString(getString(R.string.dictionarypref), "no selection");
