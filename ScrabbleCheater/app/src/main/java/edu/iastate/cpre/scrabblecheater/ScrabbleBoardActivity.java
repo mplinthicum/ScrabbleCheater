@@ -98,7 +98,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
                         if(src.equals("")){ // for backspace
                             return src;
                         }
-                        if(src.toString().matches("[a-z0-9]+")){
+                        if(src.toString().matches("[a-z]+")){
                             return src;
                         }
                         return "";
@@ -158,7 +158,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
                         if(src.equals("")){ // for backspace
                             return src;
                         }
-                        if(src.toString().matches("[a-z0-9\\*]+")){
+                        if(src.toString().matches("[a-z\\*]+")){
                             return src;
                         }
                         return "";

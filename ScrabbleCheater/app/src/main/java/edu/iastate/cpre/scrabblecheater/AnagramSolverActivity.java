@@ -66,7 +66,7 @@ public class AnagramSolverActivity extends ActionBarActivity {
 
     public void onMatchClick(View v) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String filename = sharedPreferences.getString(getString(R.string.dictionarypref), "no selection");
+        String filename = sharedPreferences.getString(getString(R.string.dictionarypref), "usaEnglish61k.txt");
         ArrayList<String> matches = new ArrayList<>();
         String bank = editText.getText().toString();
         ListView listView = (ListView) findViewById(R.id.playable_words);
