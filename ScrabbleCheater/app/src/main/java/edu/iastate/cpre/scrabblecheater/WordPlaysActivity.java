@@ -26,16 +26,40 @@ public class WordPlaysActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_word_plays);
 
+        // Get data from the Intent
         wordBank = getIntent().getStringExtra("tiles");
         boardState = getIntent().getCharArrayExtra("board");
 
+        // Debug: view board state
+        /*
         playList = (ListView) findViewById(R.id.playList);
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String(boardState).substring(1).split(""));
         playList.setAdapter(stringArrayAdapter);
         playList.invalidateViews();
+        */
+
+        // Go through each of the letters in the board and calculate words by adding them to the wordbank
+        ArrayList<String> plays = new ArrayList<>();
+        for(char c : boardState){
+            if(c != '\0'){
+                String tempWordBank = wordBank + c;
+                ArrayList<String> anagrams = findAnagrams(tempWordBank);
+
+                for(String s : anagrams){
+                    if (!plays.contains(s)){
+                        plays.add(s);
+                    }
+                }
+            }
+        }
+
+        playList = (ListView) findViewById(R.id.playList);
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, plays);
+        playList.setAdapter(stringArrayAdapter);
+        playList.invalidateViews();
     }
 
-    private ArrayList<String> findAnagrams() {
+    private ArrayList<String> findAnagrams(String bank) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String filename = sharedPreferences.getString(getString(R.string.dictionarypref), "usaEnglish61k.txt");
         ArrayList<String> matches = new ArrayList<>();
@@ -51,7 +75,7 @@ public class WordPlaysActivity extends ActionBarActivity {
 
                 // Go through each line in the dictionary file
                 while ((line = bufferedReader.readLine()) != null) {
-                    if (isAnagram(wordBank, line) && line.length() > 1) {
+                    if (isAnagram(bank, line) && line.length() > 1) {
                         matches.add(line.toLowerCase());
                     }
                 }
