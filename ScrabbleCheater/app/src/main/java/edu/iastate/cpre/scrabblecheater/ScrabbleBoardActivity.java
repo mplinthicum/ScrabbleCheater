@@ -143,6 +143,16 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
                 }
             }
         });
+
+        // Clear the current tile.
+        alertDialog.setNeutralButton("Clear", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton) {
+                boardStateArray[p + 1] = '\0';
+                ImageView currentTile = (ImageView) board.getAdapter().getItem(p + 1);
+                currentTile.setImageResource(0);
+            }
+        });
         alertDialog.show();
     }
 
@@ -183,7 +193,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
 
                 for(int i = 0; i < 7; i++) {
                     ImageView tile = (ImageView) findViewById(userImageViewTiles[i]);
-                    tile.setImageResource(R.drawable.blank_square);
+                    tile.setImageResource(0);
                 }
 
                 for(int i = 0; i < tiles.length(); i++) {
