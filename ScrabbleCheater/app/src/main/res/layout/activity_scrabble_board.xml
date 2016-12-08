@@ -91,6 +91,13 @@
             android:text="@string/board_solver_button"
             android:onClick="onBoardSolveClick"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/reset_button"
+            android:text="@string/reset_button"
+            android:onClick="onResetClick"/>
+
     </LinearLayout>
 
 </RelativeLayout>

@@ -5,4 +5,5 @@
     <string name="anagram_solver_button">Anagram Solver</string>
     <string name="board_solver_button">Board Solver</string>
     <string name="enter_tiles_button">Enter Tiles</string>
+    <string name="reset_button">Reset Board</string>
 </resources>

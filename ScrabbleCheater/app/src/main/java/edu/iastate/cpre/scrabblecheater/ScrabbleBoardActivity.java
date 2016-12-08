@@ -248,6 +248,21 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
+    /**
+     * Resets the board tiles.
+     * @param v
+     */
+    public void onResetClick(View v) {
+        for(int i = 0; i <225; i++) {
+
+            boardStateArray[i] = '\0';
+
+            // Clear the tiles
+            ImageView currentTile = (ImageView) board.getAdapter().getItem(i);
+            currentTile.setImageResource(0);
+        }
+    }
+
     private float getScreenWidth() {
         Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
