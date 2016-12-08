@@ -203,11 +203,15 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
             }
         });
 
-        // Cancel your tile entry.
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        // Clear your word bank.
+        alertDialog.setNegativeButton("Clear", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int whichButton) {
-                Toast.makeText(ScrabbleBoardActivity.this, "Flaky Hoe.", Toast.LENGTH_SHORT).show();
+                for(int i = 0; i < 7; i++) {
+                    ImageView tile = (ImageView) findViewById(userImageViewTiles[i]);
+                    tile.setImageResource(0);
+                }
+                tiles = "";
             }
         });
         alertDialog.show();
@@ -273,6 +277,10 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * Gets the pixel width of the screen.  Used for board setup.
+     * @return
+     */
     private float getScreenWidth() {
         Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -281,6 +289,11 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         return outMetrics.widthPixels;
     }
 
+    /**
+     * Chooses the right drawable to display based on the letter.
+     * @param letter
+     * @return
+     */
     private Integer chooseLetter(char letter) {
         if(letter == '*')
             return scrabbleDrawableTiles[27];
