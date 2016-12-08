@@ -44,7 +44,7 @@ public class WordPlaysActivity extends ActionBarActivity {
                 ArrayList<String> anagrams = findAnagrams(tempWordBank);
 
                 for(String s : anagrams){
-                    if (!plays.contains(s)){
+                    if (!plays.contains(s) && s.contains(c + "")){
                         plays.add(s);
                     }
                 }
