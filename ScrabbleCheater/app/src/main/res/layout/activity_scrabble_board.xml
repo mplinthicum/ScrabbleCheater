@@ -69,14 +69,28 @@
             android:id="@+id/my_tile_7" />
     </LinearLayout>
 
-    <Button
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/solve_button"
-        android:onClick="onSolveClick"
+        android:orientation="horizontal"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:layout_below="@id/player_tiles"
-        android:text="@string/solve_button"/>
+        android:layout_below="@id/player_tiles">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/anagram_solver_button"
+            android:onClick="onAnagramSolveClick"
+            android:gravity="center"
+            android:text="@string/anagram_solver_button"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/solve_board_button"
+            android:text="@string/board_solver_button"
+            android:onClick="onBoardSolveClick"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

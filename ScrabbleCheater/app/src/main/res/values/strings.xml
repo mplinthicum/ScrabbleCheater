@@ -2,6 +2,7 @@
     <string name="app_name">ScrabbleCheater</string>
     <string name="boardpref">board</string>
     <string name="dictionarypref">dictionary</string>
-    <string name="solve_button">Solve</string>
+    <string name="anagram_solver_button">Anagram Solver</string>
+    <string name="board_solver_button">Board Solver</string>
     <string name="enter_tiles_button">Enter Tiles</string>
 </resources>

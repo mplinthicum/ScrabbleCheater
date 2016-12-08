@@ -85,8 +85,8 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         final int p = position;
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("Type your word, fool.");
-        alertDialog.setMessage("Word goes here, fool");
+        alertDialog.setTitle("Enter a word.");
+        alertDialog.setMessage("Choose orientation.");
 
         final EditText input = new EditText(this);
         input.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
@@ -146,8 +146,8 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
      */
     private void tilesAlertBoxBuilder() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("Type your tiles, fool.");
-        alertDialog.setMessage("Tiles go here, fool.");
+        alertDialog.setTitle("Enter your tile bank.");
+        alertDialog.setMessage("These will be considered in the anagram solver.");
 
         final EditText input = new EditText(this);
 
@@ -218,8 +218,22 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
         setBoardFromPrefs(board);
     }
 
-    public void onSolveClick(View v) {
+    /**
+     * Start the AnagramSolverActivity and pass the word bank tiles.
+     * @param v
+     */
+    public void onAnagramSolveClick(View v) {
         startActivity(new Intent(this, AnagramSolverActivity.class).putExtra("tiles", tiles));
+    }
+
+    /**
+     * Start the WordPlays Activity and pass the word bank tiles and board state.
+     * @param v
+     */
+    public void onBoardSolveClick(View v) {
+        Intent intent = new Intent(this, WordPlaysActivity.class);
+        intent.putExtra("tiles", tiles);
+        startActivity(intent);
     }
 
     private float getScreenWidth() {
