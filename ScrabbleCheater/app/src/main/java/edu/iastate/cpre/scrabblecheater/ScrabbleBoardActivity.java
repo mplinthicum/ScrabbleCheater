@@ -174,7 +174,12 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
             public void onClick(DialogInterface dialogInterface, int whichButton) {
                 tiles = input.getText().toString();
                 Toast.makeText(ScrabbleBoardActivity.this, input.getText().toString(), Toast.LENGTH_SHORT).show();
-                
+
+                for(int i = 0; i < 7; i++) {
+                    ImageView tile = (ImageView) findViewById(userImageViewTiles[i]);
+                    tile.setImageResource(R.drawable.blank_square);
+                }
+
                 for(int i = 0; i < tiles.length(); i++) {
                     ImageView tile = (ImageView) findViewById(userImageViewTiles[i]);
                     tile.setImageResource(chooseLetter(tiles.charAt(i)));
