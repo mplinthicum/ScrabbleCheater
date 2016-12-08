@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 
@@ -17,17 +19,28 @@ import java.util.ArrayList;
 
 public class WordPlaysActivity extends ActionBarActivity {
 
+    private String wordBank = "";
+    private char[] boardState = new char[225];
+    private ListView playList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_word_plays);
+
+        wordBank = getIntent().getStringExtra("tiles");
+        boardState = getIntent().getCharArrayExtra("board");
+
+        playList = (ListView) findViewById(R.id.playList);
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String(boardState).substring(1).split(""));
+        playList.setAdapter(stringArrayAdapter);
+        playList.invalidateViews();
     }
 
     private ArrayList<String> findAnagrams() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String filename = sharedPreferences.getString(getString(R.string.dictionarypref), "usaEnglish61k.txt");
         ArrayList<String> matches = new ArrayList<>();
-        String bank = getIntent().getStringExtra("tiles");
 
         // Make sure dictionary preference is set to a dictionary
         if (!filename.equals("no selection")) {
@@ -40,7 +53,7 @@ public class WordPlaysActivity extends ActionBarActivity {
 
                 // Go through each line in the dictionary file
                 while ((line = bufferedReader.readLine()) != null) {
-                    if (isAnagram(bank, line) && line.length() > 1) {
+                    if (isAnagram(wordBank, line) && line.length() > 1) {
                         matches.add(line.toLowerCase());
                     }
                 }
