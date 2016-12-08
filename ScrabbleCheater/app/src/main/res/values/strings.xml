@@ -6,4 +6,5 @@
     <string name="board_solver_button">Board Solver</string>
     <string name="enter_tiles_button">Enter Tiles</string>
     <string name="reset_button">Reset Board</string>
+    <string name="word_play_description">The following is a list of words that are able to be played on the scrabble board:</string>
 </resources>

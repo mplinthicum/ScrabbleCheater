@@ -48,7 +48,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
     private char[] boardStateArray = new char[225];
 
     // String that holds the contents of the word bank.
-    private String tiles = null;
+    private String tiles = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
