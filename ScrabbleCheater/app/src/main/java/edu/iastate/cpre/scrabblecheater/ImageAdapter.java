@@ -49,7 +49,7 @@ public class ImageAdapter extends BaseAdapter {
             imageView.setLayoutParams(new GridView.LayoutParams(board.getLayoutParams().width,
                     board.getLayoutParams().height / 15));
             imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            imageView.setPadding(6, 0, 0, 0);
+            imageView.setPadding(0, 0, 0, 0);
 
             // Add the ImageView to the list.
             mList.add(position, imageView);

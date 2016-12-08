@@ -44,18 +44,20 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
     private Integer[] userImageViewTiles = {R.id.my_tile_1, R.id.my_tile_2, R.id.my_tile_3, R.id.my_tile_4,
             R.id.my_tile_5, R.id.my_tile_6, R.id.my_tile_7};
 
-    // 2D array that holds the char representation of the board state.
-    private char[][] boardStateArray = new char[15][15];
+    // 1D array that holds the char representation of the board state.
+    private char[] boardStateArray = new char[225];
 
-    // Array containing tile currently owned by the user.
-    private char[] userTilesArray = new char[7];
-
+    // String that holds the contents of the word bank.
     private String tiles = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrabble_board);
+
+        for(int i = 0; i < 225; i++) {
+            boardStateArray[i] = '\0';
+        }
 
         // Build the board.
         board = (GridView) findViewById(R.id.board);
@@ -116,6 +118,8 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
                     // Stop if the word goes past the end of the board.
                     if((p + i) % 15 == 0 && i > 0) break;
 
+                    boardStateArray[p + i + 1] = word.charAt(i);
+
                     // Place the tiles.
                     ImageView currentTile = (ImageView) board.getAdapter().getItem(p + i + 1);
                     currentTile.setImageResource(chooseLetter(word.charAt(i)));
@@ -130,6 +134,8 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
                 for(int i = 0; i < word.length(); i++) {
                     // Stop if the word goes past the end of the board.
                     if((p + i * 15) > 224) break;
+
+                    boardStateArray[p + i * 15 + 1] = word.charAt(i);
 
                     // Place the tiles.
                     ImageView currentTile = (ImageView) board.getAdapter().getItem(p + i * 15 + 1);
@@ -238,6 +244,7 @@ public class ScrabbleBoardActivity extends ActionBarActivity {
     public void onBoardSolveClick(View v) {
         Intent intent = new Intent(this, WordPlaysActivity.class);
         intent.putExtra("tiles", tiles);
+        intent.putExtra("board", boardStateArray);
         startActivity(intent);
     }
 
